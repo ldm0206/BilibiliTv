@@ -9,12 +9,12 @@ plugins {
     id 'com.google.dagger.hilt.android'
 }
 
-val signingProp = file(project.rootProject.file("signing.properties"))
+def signingProp = file(project.rootProject.file("signing.properties"))
 
 android {
     signingConfigs {
         if (signingProp.exists()) {
-            val properties = Properties().apply {
+           def properties = Properties().apply {
                 load(FileInputStream(signingProp))
             }
             create("key") {
