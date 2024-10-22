@@ -24,11 +24,14 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: app-apk  # 你可以自定义 artifact 的名字
-        path: app/build/outputs/apk/debug/*.apk # 替换为你的 APK 输出路径
+        path: app/build/outputs/apk/release/*.apk # 替换为你的 APK 输出路径
+    - name: Get current timestamp
+      id: timestamp
+      run: echo "::set-output name=tag::$(date +'%Y%m%d%H%M%S')"
     - name: Publish Pre-Release
       uses: softprops/action-gh-release@v2
       with:
          files: |
-            app/build/outputs/apk/debug/*.apk
-         tag_name: ${{ github.ref }}
-         release_name: Release ${{ github.ref }}
+            app/build/outputs/apk/release/*.apk
+         tag_name: ${{ steps.timestamp.outputs.tag }}
+         release_name: Release ${{ steps.timestamp.outputs.tag }}
