@@ -14,9 +14,8 @@ def signingProp = file(project.rootProject.file("signing.properties"))
 android {
     signingConfigs {
         if (signingProp.exists()) {
-           def properties = Properties().apply {
-                load(FileInputStream(signingProp))
-            }
+            def properties = new Properties()
+            properties.load(new FileInputStream(signingProp))
             create("key") {
                 storeFile = rootProject.file(properties.getProperty("keystore.path"))
                 storePassword = properties.getProperty("keystore.pwd")
